@@ -1,8 +1,18 @@
 
-<div class="row">
-    <div class="col text-center" *ngFor="let timeZone of timeZones">
-        <h2>{{timeZone.name}}</h2>
-        <p>{{timeZone.displayDate}}</p>
-        <h3>{{timeZone.displayTime}}</h3>
+<div class="row" *ngIf="isLoading">
+    <div class="col">
+        <h3>Loading...</h3>
     </div>
 </div>
+
+<div class="row" *ngIf="!isLoading">
+    <div class="col text-center" *ngFor="let timeZone of timeZones">
+        <div [ngClass]="timeZone.displayStyle">
+            <h2>{{timeZone.name}}</h2>
+            <p>{{timeZone.displayDate}}</p>
+            <h3>{{timeZone.displayTime}}</h3>
+            <p><small>{{timeZone.startTime}} - {{timeZone.endTime}}</small></p>
+        </div>
+    </div>
+</div>
+

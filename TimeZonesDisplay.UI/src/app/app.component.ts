@@ -10,13 +10,18 @@ import { Timezone } from './models/timezone';
 })
 export class AppComponent implements OnInit {
     timeZones: Timezone[];
+    isLoading: boolean = true;
 
     constructor(@Inject(DataService) private dataService) { }
 
     ngOnInit() {
         this.dataService.getTimezones().subscribe(results => {
             this.timeZones = results;
-        }, error => console.log(error));
+            this.isLoading = false;
+        }, error => {
+            console.log(error);
+            this.isLoading = false;
+        });
 
         this.updateTime();
     }

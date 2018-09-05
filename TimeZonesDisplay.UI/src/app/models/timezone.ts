@@ -4,4 +4,7 @@ export class Timezone {
     currentTime: Date;
     displayDate: string;
     displayTime: string;
+    displayStyle: string;
+    startTime: string;
+    endTime: string;
 }

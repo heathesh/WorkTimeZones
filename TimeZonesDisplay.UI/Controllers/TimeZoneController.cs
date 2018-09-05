@@ -45,10 +45,30 @@ namespace TimeZonesDisplay.UI.Controllers
                 {
                     Name = city.Name,
                     TimeZoneName = city.TimeZoneName,
-                    CurrentTime = DateTime.UtcNow.Add(timeZone.BaseUtcOffset)
+                    CurrentTime = DateTime.UtcNow.Add(timeZone.BaseUtcOffset),
+                    DisplayStyle = GetDisplayStyle(city, DateTime.UtcNow.Add(timeZone.BaseUtcOffset)),
+                    StartTime = $"{city.StartHour:00}:{city.StartMinute}",
+                    EndTime = $"{city.EndHour:00}:{city.EndMinute}"
                 };
 
             return Ok(timeZones);
+        }
+
+        private string GetDisplayStyle(CityModel city, DateTime currentTime)
+        {
+            if (currentTime.Hour == city.StartHour && currentTime.Minute >= city.StartMinute)
+                return Constants.DisplayStyles.Active;
+
+            if (currentTime.Hour > city.StartHour)
+            {
+                if (currentTime.Hour < city.EndHour)
+                    return Constants.DisplayStyles.Active;
+
+                if (currentTime.Hour == city.EndHour && currentTime.Minute <= city.EndMinute)
+                    return Constants.DisplayStyles.Active;
+            }
+
+            return Constants.DisplayStyles.InActive;
         }
     }
 }

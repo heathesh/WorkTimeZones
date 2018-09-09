@@ -56,6 +56,9 @@ namespace TimeZonesDisplay.UI.Controllers
 
         private string GetDisplayStyle(CityModel city, DateTime currentTime)
         {
+            if (currentTime.DayOfWeek == DayOfWeek.Saturday || currentTime.DayOfWeek == DayOfWeek.Sunday)
+                return Constants.DisplayStyles.InActive;
+
             if (currentTime.Hour == city.StartHour && currentTime.Minute >= city.StartMinute)
                 return Constants.DisplayStyles.Active;
 
